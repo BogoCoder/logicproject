@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ProjectLogic
 
 Bogotá D.C., Colombia
@@ -8,5 +7,3 @@ Project for Computational Logic course of Applied Mathematics and Computer Scien
 Víctor Samuel Pérez Díaz
 
 Camilo Martinez
-
->>>>>>> 28f3357604a882c7de7aeafcf8969c277a7764ea
