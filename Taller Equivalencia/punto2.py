@@ -1,11 +1,11 @@
-print "Este programa analiza la equivalencia entre dos formulas logicas."
+print "Este programa encuentra las interpretaciones que hacen verdadera a una formula."
 print "Las cadenas a ingresar deben ser las formulas en notacion polaca inversa."
-print "Las unicas letras proposicionales permitidas son: p, q, r\n \
+print "Las unicas letras proposicionales permitidas son: p, q, r, s, t\n \
 Claves de escritura para los conectivos:\n \
 La negacion se escribe: -\n \
 La Or se escribe: O\n \
 El AND se escribe: Y\n \
-La implicacion se escribe: >"
+La implicacion se escribe: >\n"
 #############################################################
 #Creador de arboles
 # Definimos la clase de objetos Tree para las formulas
@@ -68,7 +68,7 @@ def poltotree():
 
 ############################################################
 #Posibles interpretaciones
-PropoLethers = ['p', 'q']
+PropoLethers = ['p', 'q','r','t','s']
 interps = []
 aux ={}
 
@@ -129,27 +129,12 @@ def VI(f):
 
 ###########################################################
 
-interpsI = []
-interpsII = []
+#Analisis de interpretaciones
+
 formula1 = poltotree()
-formula2 = poltotree()
 
-print "Interpretaciones posibles de las formulas: \n"
+print "Interpretaciones que hacen verdadera la form: \n"
 for i in interps:
-	interpsI.append(VI(formula1))
-print interpsI
+    if VI(formula1) == 1:
+        print i
 
-for i in interps:
-	interpsII.append(VI(formula2))
-print interpsII
-
-for i in range(0,len(interps)):
-	if interpsI[i] == interpsII[i]:
-		i = i + 1
-		condi = True
-	else:
-		print "Las formulas no son equivalentes"
-		condi = False
-		break
-if(condi == True):
-	print "La formulas son equivalentes!"
