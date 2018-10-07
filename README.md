@@ -1,9 +1,11 @@
-# ProjectLogic
+# LogicProject
 
 Bogotá D.C., Colombia
 
 Project for Computational Logic course of Applied Mathematics and Computer Science, Universidad del Rosario.
 
-Víctor Samuel Pérez Díaz
+- Developed by:
 
-Camilo Martinez
+	Víctor Samuel Pérez Díaz
+
+	Camilo Martinez
