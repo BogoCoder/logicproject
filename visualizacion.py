@@ -11,11 +11,11 @@
 #   'si': si 'i' = 9, '~s9' representaria que el numero '4' NO esta en la casilla 9.
 #   y de la misma forma con los demas...
 
-# Formato de la entrada: - las letras proposionales seran: 'pi','qi','ri','si', 
+# Formato de la entrada: - las letras proposicionales seran: 'pi','qi','ri','si', 
 #                          i perteneciendo a {1, ... , 16};
 #                        - solo se aceptan literales (ej. p1, ~q2, r3, ~r12, etc.)
-# Requiere tambien un numero natural, para servir de indice del tablero,
-# toda vez que puede solicitarse visualizar varios tableros.
+# Requiere tambien un numero natural, para servir de indice del sudoku,
+# toda vez que pueda solicitarse visualizar varios sudokus.
 
 # Salida: archivo sudoku_%j.png, donde %j es un numero natural
 
