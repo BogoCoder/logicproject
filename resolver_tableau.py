@@ -24,7 +24,7 @@ for i in range(1, 17):
 # print "Letras proposicionales: ", letrasProposicionales
 
 # Regla 1: Solo hay un numero en cada casilla
-disyunciones = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
+R1 = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
 inicial = True # Para inicializar la primera conjuncion
 
 for j in range(1,17):
@@ -38,36 +38,102 @@ for j in range(1,17):
                 literal = v + '-' + literal + "Y"
         #print "literal : " + literal
         if inicial: 
-            disyunciones = literal
+            R1 = literal
             inicial = False
         else:
-            disyunciones = literal + disyunciones + 'O'
+            R1 = literal + R1 + 'O'
 
-        # print "Disyunciones: ", disyunciones
+        # print "R1: ", R1
 
 ## Comento esto para que se pueda ver el funcionamiento con la primera regla
 # Esta parte no la he modificado
-"""
 
-# Regla 2: Ningun caballo debe poder atacar a otro
 
-disyunciones = '8-6-Y1>' + disyunciones + 'Y'
-disyunciones = '9-7-Y2>' + disyunciones + 'Y'
-disyunciones = '8-4-Y3>' + disyunciones + 'Y'
-disyunciones = '9-3-Y4>' + disyunciones + 'Y'
-disyunciones = '7-1-Y6>' + disyunciones + 'Y'
-disyunciones = '6-2-Y7>' + disyunciones + 'Y'
-disyunciones = '3-1-Y8>' + disyunciones + 'Y'
-disyunciones = '4-2-Y9>' + disyunciones + 'Y'
+# Regla 2: Si hay un numero particular en una region, no debe haber otro numero igual en la misma region
 
-"""
+reg1=['1','2','5','6']
+reg2=['3','4','7','8']
+reg3=['9','10','13','14']
+reg4=['11','12','15','16']
+regs=[reg1,reg2,reg3,reg4]
 
-# Creo la formula como objeto
+R2 = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
+inicial = True # Para inicializar la primera conjuncion
+#count = 0 contador temporal de subformulas de la regla de tipo p6-p5-p2-YYp1>
+for i in range(1,17):
+    for k in range(4): 
+        if str(i) in regs[k]: #verifica si i esta en una region particular
+            for j in baslet: #itera sobre las letras porposicionales base
+                literal = "YY"+j+str(i)+'>' # forma base del final de la formula en polaca inversa
+                for x in regs[k]: #itera sobre los numeros de las casillas de la region escogida
+                    if x != str(i): #excluye el numero de la casilla donde va a estar el numero segun la regla
+                        #print "x = " + x
+                        #print "i = "+ str(i)
+                        literal = j+x+'-'+literal # agrega las otras letras porposicionales segun la regla
+                #literal corresponde a una subformula de la regla de tipo p6-p5-p2-YYp1>
+                #print "/// " + literal # imporime subformulas de tipo p6-p5-p2-YYp1>
+                #count+=1
+                if inicial: 
+                    R2 = literal
+                    inicial = False
+                else:
+                    R2 = literal + subreg + 'Y'
+            #R2 es la formula general de las conjunciones de las subformulas de tipo p6-p5-p2-YYp1>
+            #print "*** "+R2 #imprime formula general
+#print "total = "+str(count) # imprime numero total de subformulas
 
-A = T.StringtoTree(disyunciones, letrasProposicionales)
+#print "R2: ", R2
+
+
+# Regla 3: Si hay un numero particular en una fila, no debe haber otro numero igual en la misma fila
+
+row1=['1','2','3','4']
+row2=['5','6','7','8']
+row3=['9','10','11','12']
+row4=['13','14','15','16']
+rows=[row1,row2,row3,row4]
+
+R3 = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
+inicial = True # Para inicializar la primera conjuncion
+#count = 0 contador temporal de subformulas de la regla de tipo p6-p5-p2-YYp1>
+for i in range(1,17):
+    for k in range(4): 
+        if str(i) in rows[k]: #verifica si i esta en una region particular
+            for j in baslet: #itera sobre las letras porposicionales base
+                literal = "YY"+j+str(i)+'>' # forma base del final de la formula en polaca inversa
+                for x in rows[k]: #itera sobre los numeros de las casillas de la region escogida
+                    if x != str(i): #excluye el numero de la casilla donde va a estar el numero segun la regla
+                        #print "x = " + x
+                        #print "i = "+ str(i)
+                        literal = j+x+'-'+literal # agrega las otras letras porposicionales segun la regla
+                #literal corresponde a una subformula de la regla 
+                #print "/// " + literal # imporime subformulas 
+                #count+=1
+                if inicial: 
+                    R3 = literal
+                    inicial = False
+                else:
+                    R3 = literal + subreg + 'Y'
+            #R3 es la formula general de las conjunciones de las subformulas
+            #print "*** "+R3 #imprime formula general
+#print "total = "+str(count) # imprime numero total de subformulas
+
+#print "R3: ", R3
+
+##### falta regla 4
+
+sudoq = "p1r6s7q10p14r16YYYYY" # sudoku a resolver, ejemplo
+
+# Creo las formulas como objeto
+A = T.StringtoTree(R1, letrasProposicionales) #para regla 1
 print "Formula: ", T.Inorder(A)
+B = T.StringtoTree(R2, letrasProposicionales) #para regla 2
+print "Formula: ", T.Inorder(B)
+C = T.StringtoTree(R3, letrasProposicionales) #para regla 3
+print "Formula: ", T.Inorder(C)
 
-lista_hojas = [[A]] # Inicializa la lista de hojas
+
+lista_hojas = [[A,B,C,sudoq]] # Inicializa la lista de hojas
 
 OK = '' # El tableau regresa Satisfacible o Insatisfacible
 interpretaciones = [] # lista de lista de literales que hacen verdadera lista_hojas
