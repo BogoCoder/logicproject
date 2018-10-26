@@ -95,7 +95,7 @@ rows=[row1,row2,row3,row4]
 
 R3 = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
 inicial = True # Para inicializar la primera conjuncion
-#count = 0 contador temporal de subformulas de la regla de tipo p6-p5-p2-YYp1>
+#count = 0 contador temporal de subformulas de la regla
 for i in range(1,17):
     for k in range(4): 
         if str(i) in rows[k]: #verifica si i esta en una region particular
@@ -107,7 +107,7 @@ for i in range(1,17):
                         #print "i = "+ str(i)
                         literal = j+x+'-'+literal # agrega las otras letras porposicionales segun la regla
                 #literal corresponde a una subformula de la regla 
-                #print "/// " + literal # imporime subformulas 
+                #print "/// " + literal # imprime subformulas 
                 #count+=1
                 if inicial: 
                     R3 = literal
@@ -130,7 +130,7 @@ columns=[column1,column2,column3,column4]
 
 R4 = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
 inicial = True # Para inicializar la primera conjuncion
-#count = 0 contador temporal de subformulas de la regla de tipo p6-p5-p2-YYp1>
+#count = 0 contador temporal de subformulas de la regla
 for i in range(1,17):
     for k in range(4): 
         if str(i) in columns[k]: #verifica si i esta en una region particular
@@ -142,7 +142,7 @@ for i in range(1,17):
                         #print "i = "+ str(i)
                         literal = j+x+'-'+literal # agrega las otras letras porposicionales segun la regla
                 #literal corresponde a una subformula de la regla 
-                #print "/// " + literal # imporime subformulas 
+                #print "/// " + literal # imprime subformulas 
                 #count+=1
                 if inicial: 
                     R4 = literal
@@ -167,9 +167,10 @@ C = T.StringtoTree(R3, letrasProposicionales) #para regla 3
 print "Formula: ", T.Inorder(C)
 D = T.StringtoTree(R4, letrasProposicionales) #para regla 4
 print "Formula: ", T.Inorder(D)
+Z = T.StringtoTree(sudoq, letrasProposicionales) # para ejemplo
+print "Formula: ", T.Inorder(Z)
 
-
-lista_hojas = [[A,B,C,D,sudoq]] # Inicializa la lista de hojas
+lista_hojas = [[A,B,C,D,Z]] # Inicializa la lista de hojas
 
 OK = '' # El tableau regresa Satisfacible o Insatisfacible
 interpretaciones = [] # lista de lista de literales que hacen verdadera lista_hojas
