@@ -77,7 +77,7 @@ for i in range(1,17):
                     R2 = literal
                     inicial = False
                 else:
-                    R2 = literal + subreg + 'Y'
+                    R2 = literal + R2 + 'Y'
             #R2 es la formula general de las conjunciones de las subformulas de tipo p6-p5-p2-YYp1>
             #print "*** "+R2 #imprime formula general
 #print "total = "+str(count) # imprime numero total de subformulas
@@ -113,14 +113,48 @@ for i in range(1,17):
                     R3 = literal
                     inicial = False
                 else:
-                    R3 = literal + subreg + 'Y'
+                    R3 = literal + R3 + 'Y'
             #R3 es la formula general de las conjunciones de las subformulas
             #print "*** "+R3 #imprime formula general
 #print "total = "+str(count) # imprime numero total de subformulas
 
 #print "R3: ", R3
 
-##### falta regla 4
+# Regla 4: Si hay un numero particular en una columna, no debe haber otro numero igual en la misma columna
+
+column1=['1','5','9','13']
+column2=['2','6','10','14']
+column3=['3','7','11','15']
+column4=['4','8','12','16']
+columns=[column1,column2,column3,column4]
+
+R4 = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
+inicial = True # Para inicializar la primera conjuncion
+#count = 0 contador temporal de subformulas de la regla de tipo p6-p5-p2-YYp1>
+for i in range(1,17):
+    for k in range(4): 
+        if str(i) in columns[k]: #verifica si i esta en una region particular
+            for j in baslet: #itera sobre las letras porposicionales base
+                literal = "YY"+j+str(i)+'>' # forma base del final de la formula en polaca inversa
+                for x in columns[k]: #itera sobre los numeros de las casillas de la region escogida
+                    if x != str(i): #excluye el numero de la casilla donde va a estar el numero segun la regla
+                        #print "x = " + x
+                        #print "i = "+ str(i)
+                        literal = j+x+'-'+literal # agrega las otras letras porposicionales segun la regla
+                #literal corresponde a una subformula de la regla 
+                #print "/// " + literal # imporime subformulas 
+                #count+=1
+                if inicial: 
+                    R4 = literal
+                    inicial = False
+                else:
+                    R4 = literal + R4 + 'Y'
+            #R4 es la formula general de las conjunciones de las subformulas
+            #print "*** "+R4 #imprime formula general
+#print "total = "+str(count) # imprime numero total de subformulas
+
+#print "R4: ", R4
+
 
 sudoq = "p1r6s7q10p14r16YYYYY" # sudoku a resolver, ejemplo
 
@@ -131,9 +165,11 @@ B = T.StringtoTree(R2, letrasProposicionales) #para regla 2
 print "Formula: ", T.Inorder(B)
 C = T.StringtoTree(R3, letrasProposicionales) #para regla 3
 print "Formula: ", T.Inorder(C)
+D = T.StringtoTree(R4, letrasProposicionales) #para regla 4
+print "Formula: ", T.Inorder(D)
 
 
-lista_hojas = [[A,B,C,sudoq]] # Inicializa la lista de hojas
+lista_hojas = [[A,B,C,D,sudoq]] # Inicializa la lista de hojas
 
 OK = '' # El tableau regresa Satisfacible o Insatisfacible
 interpretaciones = [] # lista de lista de literales que hacen verdadera lista_hojas
