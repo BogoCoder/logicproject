@@ -8,4 +8,4 @@ Project for Computational Logic course of Applied Mathematics and Computer Scien
 
 	Víctor Samuel Pérez Díaz
 
-	Camilo Martinez
+	Camilo Andrés Martínez Mejía
