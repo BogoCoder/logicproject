@@ -87,15 +87,23 @@ def imprime_hoja(H):
 def obtiene_literales(cadena, letrasProposicionales):
 	literales = []
 	contador = 0
-	while contador < len(cadena):
+	baslet = ['p', 'q', 'r', 's']
+	while contador < len(cadena) - 1:
 		if cadena[contador] == '-':
-			l = cadena[contador] + cadena[contador+1]
+			if "".join(cadena[contador+2: contador+4]).isdigit():
+				l = "".join(cadena[contador: contador+4])
+			else:
+				l = "".join(cadena[contador: contador+3])
 			literales.append(l)
-			contador += 1
-		elif cadena[contador] in letrasProposicionales:
-			l = cadena[contador]
+			contador += 2
+		elif "".join(cadena[contador]) in baslet:
+			if "".join(cadena[contador+1: contador+3]).isdigit():
+				l = "".join(cadena[contador: contador+3])
+			else:
+				l = "".join(cadena[contador: contador+2])
 			literales.append(l)
 		contador += 1
+	print "\nlit2:", literales
 	return literales
 
 
