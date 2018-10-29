@@ -28,7 +28,7 @@ for i in range(1, 17):
 R1 = '' # Para guardar la formula de la regla 1 en polaca inversa
 inicial = True # Para inicializar la primera
 
-for j in range(1, 3):
+for j in range(1, 3): #range(1, x) x-1 representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=17.
     aux1 = [x for x in letrasProposicionales if x[1:] == str(j)]
     #print "aux1: " , aux1
     for u in aux1:
@@ -44,7 +44,7 @@ for j in range(1, 3):
         else:
             R1 = literal + R1
     
-    if j < 2:
+    if j < 2: # j < x donde x representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=16.
         R1 = 'OOO'+ R1 + 'Y'
    
 #print "R1: ", R1
@@ -61,7 +61,7 @@ regs=[reg1,reg2,reg3,reg4]
 R2 = '' # Para guardar la formula de la regla 2 en polaca inversa
 inicial = True # Para inicializar la primera conjuncion
 #count = 0 contador temporal de subformulas de la regla
-for i in range(1,3):
+for i in range(1,3): #range(1, x) x-1 representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=17.
     for k in range(4): 
         if str(i) in regs[k]: #verifica si i esta en una region particular
             for j in baslet: #itera sobre las letras proposicionales base
@@ -80,7 +80,7 @@ for i in range(1,3):
                 else:
                     R2 = literal + R2
     
-    if i < 2:
+    if i < 2:# j < x donde x representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=16.
         R2 = 'OOO'+ R2 + 'Y'
             #R2 es la formula general de las conjunciones de las subformulas 
             #print "*** "+R2 #imprime formula general
@@ -101,7 +101,7 @@ R3 = '' # Para guardar la formula de la regla 3 en polaca inversa
 inicial = True # Para inicializar la primera conjuncion
 c = 0
 #count = 0 contador temporal de subformulas de la regla
-for i in range(1,3):
+for i in range(1,3):#range(1, x) x-1 representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=17.
     for k in range(4): 
         if str(i) in rows[k]: #verifica si i esta en una region particular
             for j in baslet: #itera sobre las letras porposicionales base
@@ -120,7 +120,7 @@ for i in range(1,3):
                 else:
                     R3 = literal + R3
     
-    if i < 2:
+    if i < 2:# j < x donde x representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=16.
         R3 = 'OOO'+ R3 + 'Y'
             #R3 es la formula general de las conjunciones de las subformulas
             #print "*** "+R3 #imprime formula general
@@ -139,7 +139,7 @@ columns=[column1,column2,column3,column4]
 R4 = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
 inicial = True # Para inicializar la primera conjuncion
 #count = 0 contador temporal de subformulas de la regla
-for i in range(1,3):
+for i in range(1,3): #range(1, x) x-1 representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=17.
     for k in range(4): 
         if str(i) in columns[k]: #verifica si i esta en una region particular
             for j in baslet: #itera sobre las letras porposicionales base
@@ -158,7 +158,7 @@ for i in range(1,3):
                 else:
                     R4 = literal + R4
     
-    if i < 2:
+    if i < 2:# j < x donde x representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=16.
         R4 = 'OOO'+ R4 + 'Y'
             #R4 es la formula general de las conjunciones de las subformulas
             #print "*** "+R4 #imprime formula general
@@ -181,7 +181,7 @@ print "\nFormula 4: ", T.Inorder(D)
 Z = T.StringtoTree(sudoq, letrasProposicionales) # para ejemplo
 print "\nFormula parcial: ", T.Inorder(Z)
 
-lista_hojas = [[A,C,D,Z]] # Inicializa la lista de hojas
+lista_hojas = [[A,B,C,D,Z]] # Inicializa la lista de hojas
 
 OK = '' # El tableau regresa Satisfacible o Insatisfacible
 interpretaciones = [] # lista de lista de literales que hacen verdadera lista_hojas
