@@ -8,22 +8,25 @@
 # Este codigo esta adaptado para solucionar las dos primeras casillas de un sudoku
 # parcialmente lleno.
 
-# ATENCION: Este procedimiento dura aprox. 2 horas.
+# ATENCION: Este procedimiento dura aprox. 2 horas en un cumputador de hogar.
 
 # Si se quiere simplificar la ejecucion para ver un resultado,
-# puede eliminar una regla de la variable 'lista_hojas', recomendamos 'B' en este caso.
+# puede eliminar una regla de la variable 'lista_hojas', recomendamos eliminar 'B' en este caso.
 
-# Si asi se quiere, se puede adaptar para la solucion de todo un sudoku (revisar comentarios de las reglas)
-# PELIGRO: Esto podria tomar la edad del universo.
+# Si asi se quiere, se puede adaptar para la solucion de todo un sudoku.
+# Para hacer esto modifique la variable 'val', haga val = 16
+# PELIGRO: Esto podria tomar la edad del universo en un cumputador de hogar.
 
-# Tambien se puede adaptar para la resolucion de mas casillas.
+# Tambien se puede adaptar para la resolucion de diferentes numeros de casillas,
+# haciendo la variable val igual a un numero n en el intervalo [2,16].
 
 # Cada formula de las reglas esta representada por R1, R2, R3 y R4 respectivamente.
 # Cada una tiene su seccion de creacion, para posteriormente ser transformadas a 
 # objetos .Tree en las variables A,B,C,D respectivamente.
 
-# Las condiciones para el sudoku parcialmente lleno estan dadas en la variable 'sudoq'
-# luego es convertido a objeto .Tree en la variable 'Z'.
+# Las condiciones para el sudoku parcialmente lleno, sudoku a solucionar, estan dadas en la variable 'sudoq'
+# la cual puede ser modificada si se quiere resolver un sudoku particular, claro esta siguiendo las reglas de representacion.
+# luego 'sudoq' es convertido a objeto .Tree en la variable 'Z'.
 
 print "Importando paquetes..."
 from timeit import default_timer as timer
@@ -44,12 +47,17 @@ for i in range(1, 17):
 
 # print "Letras proposicionales: ", letrasProposicionales
 
+###### Importante: variable 'val' ######
+val = 2 # val representa el numero de casillas.
+# Para este caso base trabajamos con las 2 primeras casillas por facilidad de ejecucion (val=2)
+# pero en realidad val debe ser 16, el sudoku completo.
+
 ## Regla 1: Solo hay un numero en cada casilla
 
 R1 = '' # Para guardar la formula de la regla 1 en polaca inversa
 inicial = True # Para inicializar la primera
 
-for j in range(1, 3): #range(1, x) x-1 representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=17.
+for j in range(1, val+1):
     aux1 = [x for x in letrasProposicionales if x[1:] == str(j)]
     #print "aux1: " , aux1
     for u in aux1:
@@ -65,7 +73,7 @@ for j in range(1, 3): #range(1, x) x-1 representa el numero de casillas. Para es
         else:
             R1 = literal + R1
     
-    if j < 2: # j < x donde x representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=16.
+    if j < val:
         R1 = 'OOO'+ R1 + 'Y'
    
 #print "R1: ", R1
@@ -82,7 +90,7 @@ regs=[reg1,reg2,reg3,reg4]
 R2 = '' # Para guardar la formula de la regla 2 en polaca inversa
 inicial = True # Para inicializar la primera conjuncion
 #count = 0 contador temporal de subformulas de la regla
-for i in range(1,3): #range(1, x) x-1 representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=17.
+for i in range(1,val+1):
     for k in range(4): 
         if str(i) in regs[k]: #verifica si i esta en una region particular
             for j in baslet: #itera sobre las letras proposicionales base
@@ -101,7 +109,7 @@ for i in range(1,3): #range(1, x) x-1 representa el numero de casillas. Para est
                 else:
                     R2 = literal + R2
     
-    if i < 2:# j < x donde x representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=16.
+    if i < val:
         R2 = 'OOO'+ R2 + 'Y'
             #R2 es la formula general de las conjunciones de las subformulas 
             #print "*** "+R2 #imprime formula general
@@ -122,7 +130,7 @@ R3 = '' # Para guardar la formula de la regla 3 en polaca inversa
 inicial = True # Para inicializar la primera conjuncion
 c = 0
 #count = 0 contador temporal de subformulas de la regla
-for i in range(1,3):#range(1, x) x-1 representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=17.
+for i in range(1,val+1):
     for k in range(4): 
         if str(i) in rows[k]: #verifica si i esta en una region particular
             for j in baslet: #itera sobre las letras porposicionales base
@@ -141,7 +149,7 @@ for i in range(1,3):#range(1, x) x-1 representa el numero de casillas. Para este
                 else:
                     R3 = literal + R3
     
-    if i < 2:# j < x donde x representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=16.
+    if i < val:
         R3 = 'OOO'+ R3 + 'Y'
             #R3 es la formula general de las conjunciones de las subformulas
             #print "*** "+R3 #imprime formula general
@@ -160,7 +168,7 @@ columns=[column1,column2,column3,column4]
 R4 = '' # Para ir guardando las disyunciones de cuartetos de disyunciones de literales
 inicial = True # Para inicializar la primera conjuncion
 #count = 0 contador temporal de subformulas de la regla
-for i in range(1,3): #range(1, x) x-1 representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=17.
+for i in range(1,val+1):
     for k in range(4): 
         if str(i) in columns[k]: #verifica si i esta en una region particular
             for j in baslet: #itera sobre las letras porposicionales base
@@ -179,7 +187,7 @@ for i in range(1,3): #range(1, x) x-1 representa el numero de casillas. Para est
                 else:
                     R4 = literal + R4
     
-    if i < 2:# j < x donde x representa el numero de casillas. Para este caso trabajamos con las 2 primeras casillas por facilidad de ejecucion pero en realidad x=16.
+    if i < val:
         R4 = 'OOO'+ R4 + 'Y'
             #R4 es la formula general de las conjunciones de las subformulas
             #print "*** "+R4 #imprime formula general
