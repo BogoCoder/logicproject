@@ -167,7 +167,7 @@ for i in range(1,3): #range(1, x) x-1 representa el numero de casillas. Para est
 #print "R4: ", R4
 
 
-sudoq = "p1r6s7q10p14r16YYYYY" # sudoku a resolver, ejemplo
+sudoq = "r6s7q10p14r16YYYY" # sudoku a resolver, ejemplo
 
 # Creo las formulas como objeto
 A = T.StringtoTree(R1, letrasProposicionales) #para regla 1
