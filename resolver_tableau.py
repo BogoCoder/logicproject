@@ -48,7 +48,7 @@ for i in range(1, 17):
 # print "Letras proposicionales: ", letrasProposicionales
 
 ###### Importante: variable 'val' ######
-val = 2 # val representa el numero de casillas.
+val = 16 # val representa el numero de casillas.
 # Para este caso base trabajamos con las 2 primeras casillas por facilidad de ejecucion (val=2)
 # pero en realidad val debe ser 16, el sudoku completo.
 
@@ -210,7 +210,7 @@ print "\nFormula 4: ", T.Inorder(D)
 Z = T.StringtoTree(sudoq, letrasProposicionales) # para ejemplo
 print "\nFormula parcial: ", T.Inorder(Z)
 
-lista_hojas = [[A,B,C,D,Z]] # Inicializa la lista de hojas
+lista_hojas = [[A,B,C,D]] # Inicializa la lista de hojas
 
 OK = '' # El tableau regresa Satisfacible o Insatisfacible
 interpretaciones = [] # lista de lista de literales que hacen verdadera lista_hojas
