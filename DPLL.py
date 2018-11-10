@@ -33,5 +33,12 @@ def unitPropagate(S, I):
 		return Sx, I
 
 def DPLL(S, I):
-	S, I = unitPropagate(S, interps)
+	S, I = unitPropagate(S, I)
+	print(S, I)
+	if [] in S:
+		return False, {}
+	if len(S) == 0:
+		return True, I
+	else:
+		return True, I
 

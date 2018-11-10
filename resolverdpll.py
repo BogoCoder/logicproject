@@ -52,5 +52,4 @@ for j in range(1, val+1):
 conjuntoClaus = [['-p10', 'p16'],['p10','q6'],['q6'], ['p1']]
 #conjuntoClaus = cnf.toclaus(R1, letrasProposicionales)
 interps = {}
-pille, interps = dpll.unitPropagate(conjuntoClaus, interps)
-print(pille, interps)
+OK, interps = dpll.DPLL(conjuntoClaus, interps)
