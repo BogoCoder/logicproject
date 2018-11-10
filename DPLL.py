@@ -1,35 +1,37 @@
-def unitPropagate(conjuntoClaus, interparcial):
-	clausnocur = conjuntoClaus
-	print(u"Realizando Unit Propagation a:", clausnocur)
+def unitPropagate(S, I):
+	Sx = S
+	print(u"Realizando Unit Propagation a:", Sx)
 	unit = False
 	novoid = True
 	ind = 0
-	for i in range(len(conjuntoClaus)):
-		if len(conjuntoClaus[i]) == 0:
+	for i in range(len(S)):
+		if len(S[i]) == 0:
 			novoid = False
 			break
-		if len(conjuntoClaus[i]) == 1: 
+		if len(S[i]) == 1: 
 			unit = True
 			ind = i
 
 	if(unit and novoid):
-		current = conjuntoClaus[ind][0]
+		current = S[ind][0]
 		if '-' in current:
 			dictmp={current[1:]:False}
-			interparcial.update(dictmp)
-			clausnocur = [x for x in conjuntoClaus if current not in x]
-			for i in range(len(clausnocur)):
-				clausnocur[i] = [x for x in clausnocur[i] if current[1:] != x]
+			I.update(dictmp)
+			Sx = [x for x in S if current not in x]
+			for i in range(len(Sx)):
+				Sx[i] = [x for x in Sx[i] if current[1:] != x]
 		else:
 			dictmp={current:True}
-			interparcial.update(dictmp)
-			clausnocur = [x for x in conjuntoClaus if current not in x]
-			for i in range(len(clausnocur)):
-				clausnocur[i] = [x for x in clausnocur[i] if '-' + current != x]
-		return unitPropagate(clausnocur, interparcial)
+			I.update(dictmp)
+			Sx = [x for x in S if current not in x]
+			for i in range(len(Sx)):
+				Sx[i] = [x for x in Sx[i] if '-' + current != x]
+		return unitPropagate(Sx, I)
 
 	else:
-		print(u"Fin de Unit Propagate:", clausnocur)
-		return clausnocur, interparcial
+		print(u"Fin de Unit Propagate:", Sx)
+		return Sx, I
 
-	
+def DPLL(S, I):
+	S, I = unitPropagate(S, interps)
+
