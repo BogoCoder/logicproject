@@ -33,12 +33,27 @@ def unitPropagate(S, I):
 		return Sx, I
 
 def DPLL(S, I):
-	S, I = unitPropagate(S, I)
-	print(S, I)
-	if [] in S:
-		return False, {}
-	if len(S) == 0:
-		return True, I
+        Sx, Ix = unitPropagate(S, I)
+        if len(Sx) == 0: 
+		return "Satisfacible", Ix
+        for i in range(len(Sx)):
+		if len(Sx[i]) == 0:
+			return "Insatisfacible", {}
+        current = Sx[0][0]
+	if '-' in current:
+		dictmp={current[1:]:False}
+		Ix.update(dictmp)
+		Sx = [x for x in S if current not in x]
+		for i in range(len(Sx)):
+			Sx[i] = [x for x in Sx[i] if current[1:] != x]
 	else:
-		return True, I
-
+		dictmp={current:True}
+		Ix.update(dictmp)
+		Sx = [x for x in S if current not in x]
+		for i in range(len(Sx)):
+			Sx[i] = [x for x in Sx[i] if '-' + current != x]
+	return DPLL(Sx, Ix)
+	
+	
+	
+		
