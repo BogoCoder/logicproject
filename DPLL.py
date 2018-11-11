@@ -1,10 +1,25 @@
-def unitPropagate(S, I):
+#-*-coding: utf-8-*-
+# Programado en Python3
+# Programado por Camilo Martinez y Samuel Perez
+# Noviembre, 2018
+
+# Algoritmo DPLL
+
+
+def unitPropagate(S, I): #Unit Propagation 
+	# Hace Unit Propagation a una conjunto de clausulas
+	# Input: -S, conjunto (lista de listas) de clausulas
+	#		 -I, interpretacion parcial (diccionario)
+
+	# Output: -Sx, conjunto (lista de listas) de clausulas
+	#	 	  -I, interpretacion parcial (diccionario)
+
 	Sx = S
-	print(u"Unit Propagate:", Sx)
-	unit = False
-	novoid = True
+	print(u"Unit Propagate:", Sx, I)
+	unit = False # Para definir si el conjunto tiene clausula unitaria
+	novoid = True # Para definir si el conjunto NO tiene clausula vacia
 	ind = 0
-	for i in range(len(S)):
+	for i in range(len(S)): # Analisis de S
 		if len(S[i]) == 0:
 			novoid = False
 			break
@@ -12,15 +27,15 @@ def unitPropagate(S, I):
 			unit = True
 			ind = i
 
-	if(unit and novoid):
-		current = S[ind][0]
-		if '-' in current:
+	if(unit and novoid): # Si tiene clausula unitaria, y NO tiene clausula vacia...
+		current = S[ind][0] # Clausula unitaria
+		if '-' in current: # Si es de la forma '-p'...
 			dictmp={current[1:]:False}
 			I.update(dictmp)
 			Sx = [x for x in S if current not in x]
 			for i in range(len(Sx)):
 				Sx[i] = [x for x in Sx[i] if current[1:] != x]
-		else:
+		else: # Si es la forma 'p'...
 			dictmp={current:True}
 			I.update(dictmp)
 			Sx = [x for x in S if current not in x]
@@ -28,10 +43,20 @@ def unitPropagate(S, I):
 				Sx[i] = [x for x in Sx[i] if '-' + current != x]
 		return unitPropagate(Sx, I)
 
-	else:
+	else: # Si alguna de las condiciones no se cumple...
+		print(u"FIN UP:", Sx, I)
 		return Sx, I
 
 def assign(Sx, Ix, lit):
+	# Elimina las clausulas que contienen a lit y elimina -lit de las clausulas restantes
+	# Input: -Sx, conjunto (lista de listas) de clausulas
+	#		 -Ix, interpretacion parcial (diccionario)
+	#		 -lit, literal a evaluar
+
+	# Output: -Sxx, conjunto (lista de listas) de clausulas
+	#	 	  -Ix, interpretacion parcial (diccionario)	
+
+	print("Assigning:", Sx, Ix, lit)
 	x = lit
 	if '-' in x:
 		dictmp={x[1:]:False}
@@ -49,21 +74,30 @@ def assign(Sx, Ix, lit):
 	return Sxx, Ix
 
 def DPLL(S, I):
-	print("DPLL:", S, I)
+	# Funcion principal del algoritmo DPLL, depende de las dos anteriores funciones definidas
+	# Input: -S, conjunto (lista de listas) de clausulas
+	#		 -I, interpretacion parcial (diccionario)
+
+	# Output: -True/False, que corresponden a 'Satisfacible' e 'Insatisfacible' respectivamente.
+	#	 	  -Ix, interpretacion parcial (diccionario)	
+
+	print("\nDPLL:", S, I)
 	Sx, Ix = unitPropagate(S, I)
 	if [] in Sx:
 		return False, {}
 	elif len(Sx) == 0:
 		return True, Ix
 	else:
+		#print(Ix, Sx)
+		lit = []
 		for C in Sx:
-			lit = [x for x in C if x not in Ix]
+			lit += [x for x in C if x not in Ix]
 		Sxx, Ixx = assign(Sx, Ix, lit[0])
-		#print(Sxx, Ixx)
 		OK, Ir = DPLL(Sxx, Ixx)
 		if OK == True:
 			return True, Ir
 		elif len(lit) > 0:
+			#print("\nBACK!")
 			if '-' in lit[0]:
 				litback = lit[0][1:]
 				Sxx, Ixx = assign(Sx, Ix, litback)

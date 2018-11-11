@@ -235,7 +235,7 @@ if OK == 'Satisfacible':
 
         print "Interpretaciones guardadas  en " + archivo
 
-        import visualizacion as V
+        import visualizacion_tableau as V
         contador = 1
         for i in INTS:
             print contador, ": ", "Trabajando con literales: ", i

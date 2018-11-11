@@ -1,6 +1,6 @@
 #-*-coding: utf-8-*-
-# Programado en python 3
-# Basado en el codigo de Edgar Andrade, Octubre 2018
+# Programado en Python3
+# Basado en el codigo de Edgar Andrade, Noviembre 2018
 # Camilo Martinez y Samuel Perez
 
 # Visualizacion de tableros de sudoku 4x4 a partir de

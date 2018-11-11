@@ -1,4 +1,5 @@
 #-*-coding: utf-8-*-
+# Programado en Python3
 
 class Tree(object):
 	def __init__(self, label, left, right):
