@@ -32,28 +32,39 @@ def unitPropagate(S, I):
 		print(u"Fin de Unit Propagate:", Sx)
 		return Sx, I
 
-def DPLL(S, I):
-        Sx, Ix = unitPropagate(S, I)
-        if len(Sx) == 0: 
-		return "Satisfacible", Ix
-        for i in range(len(Sx)):
-		if len(Sx[i]) == 0:
-			return "Insatisfacible", {}
-        current = Sx[0][0]
-	if '-' in current:
-		dictmp={current[1:]:False}
+def assign(S, I, lit):
+	Sx = S
+	Ix = I
+	x = lit[0]
+	if '-' in x:
+		dictmp={x[1:]:False}
 		Ix.update(dictmp)
-		Sx = [x for x in S if current not in x]
-		for i in range(len(Sx)):
-			Sx[i] = [x for x in Sx[i] if current[1:] != x]
+		Sxx = [Cl for Cl in Sx if x not in Cl]
+		for Ci in range(len(Sxx)):
+			Sxx[Ci] = [l for l in Sxx[Ci] if x[1:] != l]
 	else:
-		dictmp={current:True}
+		dictmp={x:True}
 		Ix.update(dictmp)
-		Sx = [x for x in S if current not in x]
-		for i in range(len(Sx)):
-			Sx[i] = [x for x in Sx[i] if '-' + current != x]
-	return DPLL(Sx, Ix)
-	
-	
-	
-		
+		Sxx = [Cl for Cl in Sx if x not in Cl]
+		for Ci in range(len(Sxx)):
+			Sxx[Ci] = [l for l in Sxx[Ci] if '-' + x != l]			
+
+	return Sxx, Ix
+
+def DPLL(S, I):
+	Sx, Ix = unitPropagate(S, I)
+	if [] in Sx:
+		return False, {}
+	elif len(Sx) == 0:
+		return True, Ix
+	else:
+		for C in Sx:
+			lit = [x for x in C if x not in Ix]
+		Sxx, Ixx = assign(Sx, Ix, lit)
+		print(Sxx, Ixx)
+		OK, Ir = DPLL(Sxx, Ixx)
+		if OK == True:
+			return True, Ir
+		else:
+			return False, {}
+
