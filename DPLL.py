@@ -29,12 +29,9 @@ def unitPropagate(S, I):
 		return unitPropagate(Sx, I)
 
 	else:
-		print(u"Fin UnitPropagate:", Sx)
 		return Sx, I
 
-def assign(S, I, lit):
-	Sx = S
-	Ix = I
+def assign(Sx, Ix, lit):
 	x = lit
 	if '-' in x:
 		dictmp={x[1:]:False}
@@ -52,6 +49,7 @@ def assign(S, I, lit):
 	return Sxx, Ix
 
 def DPLL(S, I):
+	print("DPLL:", S, I)
 	Sx, Ix = unitPropagate(S, I)
 	if [] in Sx:
 		return False, {}
@@ -60,21 +58,19 @@ def DPLL(S, I):
 	else:
 		for C in Sx:
 			lit = [x for x in C if x not in Ix]
-		Sxx, Ixx = assign(Sx, Ix, lit[-1])
+		Sxx, Ixx = assign(Sx, Ix, lit[0])
 		#print(Sxx, Ixx)
 		OK, Ir = DPLL(Sxx, Ixx)
 		if OK == True:
 			return True, Ir
 		elif len(lit) > 0:
-			if '-' in lit[-1]:
-				litback = lit[-1][1:]
-				print("EYY",lit)
+			if '-' in lit[0]:
+				litback = lit[0][1:]
 				Sxx, Ixx = assign(Sx, Ix, litback)
 				del lit[0]
 				return DPLL(Sxx,Ixx)
 			else:
-				print("EUU",lit)
-				litback = '-' + lit[-1]
+				litback = '-' + lit[0]
 				Sxx, Ixx = assign(Sx, Ix, litback)
 				del lit[0]
 				return DPLL(Sxx,Ixx)
