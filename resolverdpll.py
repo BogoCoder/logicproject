@@ -49,11 +49,13 @@ for j in range(1, val+1):
    
 #print ("R1: ", R1)
 
-conjuntoClaus = [['p1','q1'], ['-p1','q1'], ['-q1','-r1'], ['r1', '-q1']]
+conjuntoClaus = [['p','q','r'], ['-p','-q','-r'], ['-p','q','r'], ['-q','r'], ['q','-r']]
 #conjuntoClaus = cnf.toclaus(R1, letrasProposicionales)
 interps = {}
 OK, interps = dpll.DPLL(conjuntoClaus, interps)
 if OK:
 	print("Satisfacible!")
+	print(OK, interps)
 else:
 	print("Nada!")
+	print(OK, interps)

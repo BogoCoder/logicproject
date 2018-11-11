@@ -1,6 +1,6 @@
 def unitPropagate(S, I):
 	Sx = S
-	print(u"Realizando Unit Propagation a:", Sx)
+	print(u"Unit Propagate:", Sx)
 	unit = False
 	novoid = True
 	ind = 0
@@ -29,13 +29,13 @@ def unitPropagate(S, I):
 		return unitPropagate(Sx, I)
 
 	else:
-		print(u"Fin de Unit Propagate:", Sx)
+		print(u"Fin UnitPropagate:", Sx)
 		return Sx, I
 
 def assign(S, I, lit):
 	Sx = S
 	Ix = I
-	x = lit[0]
+	x = lit
 	if '-' in x:
 		dictmp={x[1:]:False}
 		Ix.update(dictmp)
@@ -60,11 +60,25 @@ def DPLL(S, I):
 	else:
 		for C in Sx:
 			lit = [x for x in C if x not in Ix]
-		Sxx, Ixx = assign(Sx, Ix, lit)
-		print(Sxx, Ixx)
+		Sxx, Ixx = assign(Sx, Ix, lit[-1])
+		#print(Sxx, Ixx)
 		OK, Ir = DPLL(Sxx, Ixx)
 		if OK == True:
 			return True, Ir
+		elif len(lit) > 0:
+			if '-' in lit[-1]:
+				litback = lit[-1][1:]
+				print("EYY",lit)
+				Sxx, Ixx = assign(Sx, Ix, litback)
+				del lit[0]
+				return DPLL(Sxx,Ixx)
+			else:
+				print("EUU",lit)
+				litback = '-' + lit[-1]
+				Sxx, Ixx = assign(Sx, Ix, litback)
+				del lit[0]
+				return DPLL(Sxx,Ixx)
 		else:
 			return False, {}
+
 
