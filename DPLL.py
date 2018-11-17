@@ -89,24 +89,20 @@ def DPLL(S, I):
 		return True, Ix
 	else:
 		#print(Ix, Sx)
-		lit = []
-		for C in Sx:
-			lit += [x for x in C if x not in Ix]
-		Sxx, Ixx = assign(Sx, Ix, lit[0])
+		lit = Sx[0][0]
+		Sxx, Ixx = assign(Sx, Ix, lit)
 		OK, Ir = DPLL(Sxx, Ixx)
 		if OK == True:
 			return True, Ir
 		elif len(lit) > 0:
 			#print("\nBACK!")
-			if '-' in lit[0]:
-				litback = lit[0][1:]
+			if '-' in lit:
+				litback = lit[1:]
 				Sxx, Ixx = assign(Sx, Ix, litback)
-				del lit[0]
 				return DPLL(Sxx,Ixx)
 			else:
-				litback = '-' + lit[0]
+				litback = '-' + lit
 				Sxx, Ixx = assign(Sx, Ix, litback)
-				del lit[0]
 				return DPLL(Sxx,Ixx)
 		else:
 			return False, {}
